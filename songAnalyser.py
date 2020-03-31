@@ -200,7 +200,7 @@ temp = all_words_count.sort_values(ascending=False).reset_index(name='Count').re
 temp['% of Total'] = temp['Count'] / temp['Count'].sum() * 100
 temp.index = temp.index + 1
 print('Top 10 Word Count\n{}\n'.format(temp.head(10)))
-#temp.to_csv('all_words_count.csv')
+# temp.to_csv('outputs//all_words_count.csv')
 
 # remove the the irrelevant words
 all_words_count_filtered = all_words_count.drop(index=['a', 'the', 'and', 'from', 'to', 'it', 'that','thats', 'or', 'this','of','is','are', 'am', 'these'])
@@ -209,15 +209,15 @@ temp['% of Total'] = temp['Count'] / temp['Count'].sum() * 100
 temp.index = temp.index + 1
 print('Top 10 Word Count (filtered)\n{}\n'.format(temp.head(10)))
 print('Removed words a, the, and, from, to, it, that, thats, or, this, of, is, are, am, these.')
-#temp.to_csv('all_words_count_filtered.csv')
+# temp.to_csv('outputs//all_words_count_filtered.csv')
 
 
 # check for rhyming #
 #####################
 temp = df[['album','year', 'title']].rename(columns={'album':'Album', 'title':'Song Title', 'year':'Year'})
 temp['Rhyme Count'] = df.lyrics.apply(lambda row: rhyme_count(row.split('\n')))
-temp.index = temp.index + 1
 temp = temp.sort_values(by=['Rhyme Count', 'Year'], ascending=(False,True), ignore_index=True)
+temp.index = temp.index + 1
 no_rhymes_percent = len(temp[temp['Rhyme Count'] == 0]) / len(temp)
 print('Top 5 Songs with Most Rhyme Count\n{}\n'.format(temp.head(10)))
 rhyming_songs = temp.loc[temp['Rhyme Count'] > 0, 'Year'].value_counts().reset_index(name='Total Songs with Rhymes')
@@ -226,19 +226,20 @@ rhyme_totals = rhyming_songs.merge(no_rhyming_songs, on='index', how='outer', so
 rhyme_totals_pvt = rhyme_totals.pivot_table(index='Year', margins=True, margins_name='Total:', aggfunc=sum)
 print('Total Songs With and Without Rhymes per Year\n{}'.format(rhyme_totals_pvt))
 print('Therefore, {:.0%} of the songs did not have any rhymes in it.\n'.format(no_rhymes_percent))
-#temp.to_csv('rhyme_count.csv')
+# temp.to_csv('outputs//rhyme_count.csv')
 
 
 # write my own lyrics using markov chain #
 ###########################################
 
 # Creating the directed graph for visuals using an adjacency matrix
-# Use the cleaned data for this
+# Use the cleaned data for this and remove \n from data 
 print('Creating an adjacency matrix for each word and its followers\' probabilities...')
+df['lyrics'] = df['lyrics'].str.replace('\n', ' ')
 words_df = pd.DataFrame(find_follower_probabilities(df))
 square_words_df =  words_df.reindex(list(words_df.columns)).fillna(0)
-square_words_df.to_csv('word_follower_square_matrix.csv')
-print('Done. The adjacency matrix is saved in the current directory as word_follower_square_matrix.csv\n')
+square_words_df.to_csv('outputs//adjacency_matrix.csv')
+print('Done. The adjacency matrix is saved in the current directory as graph.csv\n')
 
 # Generate the lyrics using the unformated df.
 # This was we keep ending words.
