@@ -10,7 +10,7 @@ The Python packages used in the project are in `requirements.txt`. Download them
 pip install -r requirements.txt
 ```
 
-### Collect The Data: A Lyrics Scraper
+**Collecting The Data: A Lyrics Scraper**
 
 The data source `lyrics_data_master.csv` was created by running the lyrics scraper [bsblyricscraper.py](bsblyricscraper.py) which is a web scraper coded to extract data on Backstreet Boys albums from the website [AZLyrics](https://www.azlyrics.com/). The code uses delayed requests (between 1-60 second intervals) to avoid getting blocked before some data can be extracted.
 
@@ -20,22 +20,22 @@ The `songAnalyser.py` reads in the data from `lyrics_data_master.csv` and does a
 
 ### Word Count
 
-#### Top 10 Word Count
+**Top 10 Word Count**
 
 ![top 10 words count](outputs/word_count.PNG)
 
 Words such as a, the, and, from, to, it, that, thats, or, this, of, is, are, am, these are not meaningful and so we can remove them to get a better idea of what are top 10 words used:
 
-#### Top 10 Word Count (filtered)
+**Top 10 Word Count (filtered)**
 
 ![top 10 words count filtered](outputs/word_count_filtered.PNG)
 
 ### Rhyme Count
-#### Top 5 songs with most rhymes:
+**Top 5 Songs With Most Rhymes**
 
 ![top 5 rhyming songs](outputs/rhyme_count.PNG)
 
-#### Total Number of Songs with Rhymes per Year
+**Total Number of Songs with Rhymes per Year**
 
 ![rhyming songs per year](outputs/rhyme_count_years.PNG)
 
