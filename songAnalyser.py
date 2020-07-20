@@ -9,9 +9,6 @@ import numpy as np
 import pandas as pd
 import pronouncing
 
-################################
-#            Methods           #
-################################
 
 def remove_punc(df, column_name):
     punctuation = [p for p in string.punctuation]
@@ -28,7 +25,7 @@ def seperate_abvs(df, column_name):
 
 
 def rhyme_count(lyrics_row):
-    '''
+    """
     Return how many times there was a rhyme
     
     Param
@@ -38,7 +35,7 @@ def rhyme_count(lyrics_row):
     Output
     ------
     int
-    '''
+    """
     pars = [el for el in lyrics_row if el != '']
     prev_line = pars[0]
     rhyme_score = 0
@@ -52,13 +49,13 @@ def rhyme_count(lyrics_row):
 
 
 def find_followers(row, word):
-    '''
+    """
     Returns words that follow the given word and their frequencies.
 
     Output
     ------
     Counter {word: word_frequency}
-    '''
+    """
     # keeping the newlines allows for structure.
     lyrics_list = re.findall(r'\S+|\n', row)
 
@@ -70,13 +67,13 @@ def find_followers(row, word):
 
 
 def find_follower_probabilities(df):
-    '''
+    """
     Create a dictionary of words and probability of other words to follow it.
 
     Param
     -----
     df (DataFrame)
-    '''
+    """
     # First, create the dictionary of (unique) words
     word_keys = set()
     for row in df.lyrics.str.lower():
@@ -84,8 +81,7 @@ def find_follower_probabilities(df):
     words_dict = {key: None for key in word_keys}
 
     # Now calculate the (simple) probability of a word following another word
-    # for each word, find what other words follow it, sum the total
-    # and each words frequency
+    # for each word, find other words that follow it, total occurance and frequency.
     for word in words_dict.keys():
         words_dict[word] = df.lyrics.str.lower().apply(lambda row: find_followers(row, word)).sum()
         
@@ -97,7 +93,7 @@ def find_follower_probabilities(df):
 
 
 def generate_lyrics(prob_dict):
-    '''
+    """
     Generate lyrics.
 
     Param
@@ -107,7 +103,7 @@ def generate_lyrics(prob_dict):
     Output
     ------
     str : generated lyrics as string.
-    '''
+    """
     end_words =  [key for key in prob_dict.keys() if key[-1] == '.']
     word = np.random.choice([el for el in list(prob_dict) if el not in end_words])
     max_length =  random.randint(df.lyrics.str.split().str.len().min(),
@@ -130,7 +126,7 @@ def generate_lyrics(prob_dict):
 
 
 def format_lyrics(lyrics):
-    '''
+    """
     Format lyrics: fix open/closed paranthesis, remove extra newlines and spaces.
 
     Param
@@ -140,7 +136,7 @@ def format_lyrics(lyrics):
     Output
     ------
     str : formated lyrics.
-    '''
+    """
     # Remove whitespace between newline chars
     formated_lyrics = lyrics.replace('\n ', '\n')
     formated_lyrics = formated_lyrics.replace(' \n', '\n')
