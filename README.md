@@ -16,7 +16,7 @@ The data source `lyrics_data_master.csv` was created by running the lyrics scrap
 
 ## Song Analyser
 
-The `songAnalyser.py` reads in the data from `lyrics_data_master.csv` and does a basic analysis of the lyrics. The same program in a Jupyter notebook style is [songAnalyser.ipynb](songAnalyser.ipynb)
+The `songAnalyser.py` reads in the data from `lyrics_data_master.csv` and does a basic analysis of the lyrics. The same program in a Jupyter notebook style is [songAnalyser.ipynb](songAnalyser.ipynb).
 
 ### Word Count
 
