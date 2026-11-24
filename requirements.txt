@@ -21,6 +21,6 @@ six==1.14.0
 soupsieve==4.0
 srsly==1.0.2
 thinc==7.4.0
-tqdm==4.43.0
+tqdm==4.66.3
 urllib3==2.8.0
 wasabi==0.6.0
